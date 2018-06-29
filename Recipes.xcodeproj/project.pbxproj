@@ -9,19 +9,36 @@
 /* Begin PBXBuildFile section */
 		DA09B2A120E64CF700635934 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09B2A020E64CF700635934 /* AppDelegate.swift */; };
 		DA09B2A320E64CF700635934 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09B2A220E64CF700635934 /* ViewController.swift */; };
-		DA09B2A620E64CF700635934 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA09B2A420E64CF700635934 /* Main.storyboard */; };
 		DA09B2A820E64CF800635934 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA09B2A720E64CF800635934 /* Assets.xcassets */; };
 		DA09B2AB20E64CF800635934 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA09B2A920E64CF800635934 /* LaunchScreen.storyboard */; };
+		DAD6217220E655A30098CB2F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; };
+		DAD6217320E655A30098CB2F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DAD6217620E660780098CB2F /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6217520E660780098CB2F /* Recipe.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DAD6217420E655A30098CB2F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DAD6217320E655A30098CB2F /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DA09B29D20E64CF700635934 /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA09B2A020E64CF700635934 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA09B2A220E64CF700635934 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DA09B2A520E64CF700635934 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA09B2A720E64CF800635934 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA09B2AA20E64CF800635934 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA09B2AC20E64CF800635934 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAD6217020E652340098CB2F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		DAD6217520E660780098CB2F /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD6217220E655A30098CB2F /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +58,7 @@
 			children = (
 				DA09B29F20E64CF700635934 /* Recipes */,
 				DA09B29E20E64CF700635934 /* Products */,
+				DAD6216F20E652340098CB2F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +73,38 @@
 		DA09B29F20E64CF700635934 /* Recipes */ = {
 			isa = PBXGroup;
 			children = (
+				DAD6217820E6608C0098CB2F /* Controller */,
+				DAD6217720E6607F0098CB2F /* Model */,
 				DA09B2A020E64CF700635934 /* AppDelegate.swift */,
-				DA09B2A220E64CF700635934 /* ViewController.swift */,
-				DA09B2A420E64CF700635934 /* Main.storyboard */,
 				DA09B2A720E64CF800635934 /* Assets.xcassets */,
 				DA09B2A920E64CF800635934 /* LaunchScreen.storyboard */,
 				DA09B2AC20E64CF800635934 /* Info.plist */,
 			);
 			path = Recipes;
+			sourceTree = "<group>";
+		};
+		DAD6216F20E652340098CB2F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DAD6217020E652340098CB2F /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DAD6217720E6607F0098CB2F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DAD6217520E660780098CB2F /* Recipe.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DAD6217820E6608C0098CB2F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DA09B2A220E64CF700635934 /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,6 +117,7 @@
 				DA09B29920E64CF700635934 /* Sources */,
 				DA09B29A20E64CF700635934 /* Frameworks */,
 				DA09B29B20E64CF700635934 /* Resources */,
+				DAD6217420E655A30098CB2F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -124,7 +168,6 @@
 			files = (
 				DA09B2AB20E64CF800635934 /* LaunchScreen.storyboard in Resources */,
 				DA09B2A820E64CF800635934 /* Assets.xcassets in Resources */,
-				DA09B2A620E64CF700635934 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD6217620E660780098CB2F /* Recipe.swift in Sources */,
 				DA09B2A320E64CF700635934 /* ViewController.swift in Sources */,
 				DA09B2A120E64CF700635934 /* AppDelegate.swift in Sources */,
 			);
@@ -143,14 +187,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DA09B2A420E64CF700635934 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DA09B2A520E64CF700635934 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DA09B2A920E64CF800635934 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -280,15 +316,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WLR9JNGR33;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Recipes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.henrikbrustad.Recipes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henrikbrustad.Recipes2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -298,15 +340,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WLR9JNGR33;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Recipes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.henrikbrustad.Recipes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henrikbrustad.Recipes2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
