@@ -18,6 +18,7 @@
 		DA10A15E20EA47C5007CD0C4 /* SearchEmptyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15D20EA47C5007CD0C4 /* SearchEmptyController.swift */; };
 		DA10A16020EA47D8007CD0C4 /* SearchErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */; };
 		DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */; };
+		DA10A16420EA4A91007CD0C4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16320EA4A91007CD0C4 /* Extensions.swift */; };
 		DAD6217220E655A30098CB2F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; };
 		DAD6217320E655A30098CB2F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAD6217620E660780098CB2F /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6217520E660780098CB2F /* Recipe.swift */; };
@@ -51,6 +52,7 @@
 		DA10A15D20EA47C5007CD0C4 /* SearchEmptyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmptyController.swift; sourceTree = "<group>"; };
 		DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchErrorController.swift; sourceTree = "<group>"; };
 		DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdleController.swift; sourceTree = "<group>"; };
+		DA10A16320EA4A91007CD0C4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DAD6217020E652340098CB2F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		DAD6217520E660780098CB2F /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +92,7 @@
 				DAD6217820E6608C0098CB2F /* Controller */,
 				DAD6217720E6607F0098CB2F /* Model */,
 				DA09B2A020E64CF700635934 /* AppDelegate.swift */,
+				DA10A16320EA4A91007CD0C4 /* Extensions.swift */,
 				DA09B2A720E64CF800635934 /* Assets.xcassets */,
 				DA09B2A920E64CF800635934 /* LaunchScreen.storyboard */,
 				DA09B2AC20E64CF800635934 /* Info.plist */,
@@ -208,6 +211,7 @@
 				DA10A16020EA47D8007CD0C4 /* SearchErrorController.swift in Sources */,
 				DA09B2A120E64CF700635934 /* AppDelegate.swift in Sources */,
 				DA10A15A20EA1079007CD0C4 /* Service.swift in Sources */,
+				DA10A16420EA4A91007CD0C4 /* Extensions.swift in Sources */,
 				DA10A15E20EA47C5007CD0C4 /* SearchEmptyController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

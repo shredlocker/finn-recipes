@@ -11,24 +11,36 @@ import UIKit
 class SearchStateController: UIViewController {
     
     private var state: SearchState = .idle
+    
+    let searchBar: UISearchBar = {
+        let bar = UISearchBar(frame: .zero)
+        bar.keyboardAppearance = .dark
+        bar.barStyle = .blackTranslucent
+        bar.tintColor = .headerText
+        bar.placeholder = "Search"
+        return bar
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .background
         
-        let searchBar = UISearchBar(frame: .zero)
-        searchBar.placeholder = "Search"
         searchBar.delegate = self
         
+        navigationController?.navigationBar.barStyle = .blackTranslucent
         navigationItem.titleView = searchBar
         
         displayViewController(for: .idle)
     }
     
     private func displayViewController(for state: SearchState) {
+        // Update class property state
+        self.state = state
+        
         switch state {
         case .idle:
             print("Idle state")
+            add(SearchIdleController())
             break
         case .empty:
             print("Empty state")
@@ -44,7 +56,6 @@ class SearchStateController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
 
