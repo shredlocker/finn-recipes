@@ -8,19 +8,38 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SearchStateController: UIViewController {
+    
+    private var state: SearchState = .idle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        let tableView = UITableView(frame: view.bounds, style: .plain)
-        view.addSubview(tableView)
-        
         let searchBar = UISearchBar(frame: .zero)
         searchBar.placeholder = "Search"
         searchBar.delegate = self
+        
         navigationItem.titleView = searchBar
+        
+        displayViewController(for: .idle)
+    }
+    
+    private func displayViewController(for state: SearchState) {
+        switch state {
+        case .idle:
+            print("Idle state")
+            break
+        case .empty:
+            print("Empty state")
+            break
+        case .result:
+            print("Result state")
+            break
+        case .error:
+            print("Error state")
+            break
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,7 +48,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UISearchBarDelegate {
+extension SearchStateController: UISearchBarDelegate {
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         print("Should begin editing")
@@ -55,5 +74,12 @@ extension ViewController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("Did end editing")
+    }
+}
+
+extension SearchStateController {
+    
+    enum SearchState {
+        case idle, empty, result, error
     }
 }
