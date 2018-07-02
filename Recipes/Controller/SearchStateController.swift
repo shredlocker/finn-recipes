@@ -12,6 +12,8 @@ class SearchStateController: UIViewController {
     
     private var state: SearchState = .idle
     
+    private var viewController: UIViewController?
+    
     let searchBar: UISearchBar = {
         let bar = UISearchBar(frame: .zero)
         bar.keyboardAppearance = .dark
@@ -30,17 +32,32 @@ class SearchStateController: UIViewController {
         navigationController?.navigationBar.barStyle = .blackTranslucent
         navigationItem.titleView = searchBar
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        view.addGestureRecognizer(tapGesture)
+        
         displayViewController(for: .idle)
     }
     
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        print("Root view controller tapped")
+        dismiss(searchBar)
+    }
+    
     private func displayViewController(for state: SearchState) {
+        
+        if let child = viewController {
+            child.remove()
+        }
+        
         // Update class property state
         self.state = state
         
         switch state {
         case .idle:
             print("Idle state")
-            add(SearchIdleController())
+            let idleController = SearchIdleController()
+            viewController = idleController
+            add(idleController)
             break
         case .empty:
             print("Empty state")
@@ -69,14 +86,12 @@ extension SearchStateController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         print("Cancel button clicked")
-        searchBar.setShowsCancelButton(false, animated: true)
-        if searchBar.canResignFirstResponder { searchBar.resignFirstResponder() }
+        dismiss(searchBar)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("Searc button clicked!")
-        searchBar.setShowsCancelButton(false, animated: true)
-        if searchBar.canResignFirstResponder { searchBar.resignFirstResponder() }
+        dismiss(searchBar)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -85,6 +100,13 @@ extension SearchStateController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("Did end editing")
+    }
+    
+    private func dismiss(_ searchBar: UISearchBar) {
+        if searchBar.canResignFirstResponder {
+            searchBar.setShowsCancelButton(false, animated: true)
+            searchBar.resignFirstResponder()
+        }
     }
 }
 
