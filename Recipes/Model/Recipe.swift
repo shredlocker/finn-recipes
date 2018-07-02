@@ -18,3 +18,12 @@ class Recipe: Decodable {
         return f2f_url.lastPathComponent
     }
 }
+
+class SearchResult: Decodable {
+    let count: Int
+    let recipes: [Recipe]
+}
+
+class RecipeResult: Decodable {
+    let recipe: Recipe
+}
