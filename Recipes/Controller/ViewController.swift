@@ -15,8 +15,8 @@ struct SearchResuls: Decodable {
 }
 
 struct Recipe: Decodable {
-    let image_url: URL?
-    let title: String?
+    let image_url: URL
+    let title: String
 }
 
 class ViewController: UIViewController {
@@ -26,31 +26,15 @@ class ViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        guard let searchApi = URL(string: "https://food2fork.com/api/search") else { return }
+        let query = QueryBuilder()
+            .search(withParameters: "chicken")
+            .page(withIndex: 2)
+            .build()
         
-        let parameters: Parameters = [
-            "key": "20df2dd77ca96c91466c41b355a10f48",
-            "q": "chicken"
-        ]
-        
-        let request = Alamofire.request(searchApi, method: .post, parameters: parameters, encoding: URLEncoding.default)
-        request.responseData { (response) in
-            
-            guard let data = response.value else {
-                print("No data")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let searchResult = try decoder.decode(SearchResuls.self, from: data)
-                
-                for recipe in searchResult.recipes {
-                    print(recipe.title)
-                }
-                
-            } catch let jsonError {
-                print("Error decoding JSON,", jsonError)
+        Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResuls) in
+            print("Search result:\n")
+            for recipe in result.recipes {
+                print(recipe.title)
             }
         }
     }
