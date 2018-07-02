@@ -13,6 +13,7 @@ class QueryOperation {
     static let search = "q"
     static let sort = "sort"
     static let page = "page"
+    static let id = "rId"
 }
 
 class QueryBuilder {
@@ -25,6 +26,12 @@ class QueryBuilder {
     }
     
     @discardableResult
+    func id(_ id: String) -> QueryBuilder {
+        operations[QueryOperation.id] = id
+        return self
+    }
+    
+    @discardableResult
     func search(withParameters parameters: String) -> QueryBuilder {
         operations[QueryOperation.search] = parameters
         return self
@@ -32,7 +39,6 @@ class QueryBuilder {
     
     @discardableResult
     func sort(byOption option: SortOption) -> QueryBuilder {
-        
         switch option {
         case .rating:
             operations[QueryOperation.sort] = "r"
@@ -54,7 +60,6 @@ class QueryBuilder {
     
     @discardableResult
     func page(byOption option: PageOption) -> QueryBuilder {
-        
         switch option {
         case .next:
             operations[QueryOperation.page] = "\(currentPage + 1)"

@@ -7,16 +7,14 @@
 //
 
 import UIKit
-import Alamofire
 
-struct SearchResuls: Decodable {
+struct SearchResult: Decodable {
     let count: Int
     let recipes: [Recipe]
 }
 
-struct Recipe: Decodable {
-    let image_url: URL
-    let title: String
+struct RecipeResult: Decodable {
+    let recipe: Recipe
 }
 
 class ViewController: UIViewController {
@@ -30,12 +28,16 @@ class ViewController: UIViewController {
             .search(withParameters: "chicken")
             .page(withIndex: 2)
             .build()
-        
-        Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResuls) in
-            print("Search result:\n")
-            for recipe in result.recipes {
-                print(recipe.title)
-            }
+
+        Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResult) in
+            
+            let q = QueryBuilder()
+                .id(result.recipes[0].ID)
+                .build()
+            
+            Service.execute(q, withUrl: Service.endpoints.get, complition: { (result: RecipeResult) in
+                print(result.recipe.title)
+            })   
         }
     }
 

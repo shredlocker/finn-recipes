@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+class Recipe: Decodable {
+    let image_url: URL
+    let title: String
+    let f2f_url: URL
+    let ingredients: [String]?
+    
+    var ID: String {
+        return f2f_url.lastPathComponent
+    }
+}
