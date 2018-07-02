@@ -14,6 +14,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        let tableView = UITableView(frame: view.bounds, style: .plain)
+        view.addSubview(tableView)
+        
+        let searchBar = UISearchBar(frame: .zero)
+        searchBar.placeholder = "Search"
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,3 +29,31 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: UISearchBarDelegate {
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        print("Should begin editing")
+        searchBar.setShowsCancelButton(true, animated: true)
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("Cancel button clicked")
+        searchBar.setShowsCancelButton(false, animated: true)
+        if searchBar.canResignFirstResponder { searchBar.resignFirstResponder() }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("Searc button clicked!")
+        searchBar.setShowsCancelButton(false, animated: true)
+        if searchBar.canResignFirstResponder { searchBar.resignFirstResponder() }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        print("Did end editing")
+    }
+}
