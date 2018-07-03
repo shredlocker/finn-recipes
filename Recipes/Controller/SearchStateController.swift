@@ -42,7 +42,7 @@ class SearchStateController: UIViewController {
     }
     
     @objc func handleTap(sender: UITapGestureRecognizer) {
-        print("Root view controller tapped")
+        print("Tap tap tap tap tap")
         dismiss(searchBar)
     }
     

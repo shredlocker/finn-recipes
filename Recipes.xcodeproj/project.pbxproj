@@ -21,6 +21,7 @@
 		DA10A16420EA4A91007CD0C4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16320EA4A91007CD0C4 /* Extensions.swift */; };
 		DAB2DEF120EB572E00761A3A /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */; };
 		DAB2DEF320EB8D1100761A3A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF220EB8D1100761A3A /* GradientView.swift */; };
+		DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF420EBB52700761A3A /* RecipeViewController.swift */; };
 		DAD6217220E655A30098CB2F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; };
 		DAD6217320E655A30098CB2F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAD6217620E660780098CB2F /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6217520E660780098CB2F /* Recipe.swift */; };
@@ -57,6 +58,7 @@
 		DA10A16320EA4A91007CD0C4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		DAB2DEF220EB8D1100761A3A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		DAB2DEF420EBB52700761A3A /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		DAD6217020E652340098CB2F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		DAD6217520E660780098CB2F /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 				DA10A15D20EA47C5007CD0C4 /* SearchEmptyController.swift */,
 				DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */,
 				DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */,
+				DAB2DEF420EBB52700761A3A /* RecipeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			files = (
 				DA10A15620E9FC5B007CD0C4 /* Query.swift in Sources */,
 				DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */,
+				DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */,
 				DA10A15C20EA45A6007CD0C4 /* SearchResultViewController.swift in Sources */,
 				DAD6217620E660780098CB2F /* Recipe.swift in Sources */,
 				DA10A15820E9FD07007CD0C4 /* QueryBuilder.swift in Sources */,

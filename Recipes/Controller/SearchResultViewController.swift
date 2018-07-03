@@ -36,7 +36,6 @@ class SearchResultViewController: UIViewController {
         
         tableView.register(SearchResultCell.self, forCellReuseIdentifier: SearchResultCell.identifier)
         tableView.dataSource = self
-        tableView.delegate = self
         setupSubviews()
     }
     
@@ -84,9 +83,4 @@ extension SearchResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return view.frame.height / 5
     }
-}
-
-extension SearchResultViewController: UITableViewDelegate {
-    
-    
 }
