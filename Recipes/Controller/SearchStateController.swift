@@ -7,17 +7,20 @@
 //
 
 import UIKit
+import Alamofire
 
 class SearchStateController: UIViewController {
     
     private var state: SearchState = .idle
     
-    private var viewController: UIViewController?
+    private var searchDataRequest: Alamofire.DataRequest?
+    
+    private var currentViewController: UIViewController?
     
     let searchBar: UISearchBar = {
         let bar = UISearchBar(frame: .zero)
         bar.keyboardAppearance = .dark
-        bar.barStyle = .blackTranslucent
+        bar.barStyle = .blackOpaque
         bar.tintColor = .headerText
         bar.placeholder = "Search"
         return bar
@@ -29,7 +32,7 @@ class SearchStateController: UIViewController {
         
         searchBar.delegate = self
         
-        navigationController?.navigationBar.barStyle = .blackTranslucent
+        navigationController?.navigationBar.barTintColor = .background
         navigationItem.titleView = searchBar
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
@@ -45,7 +48,7 @@ class SearchStateController: UIViewController {
     
     private func displayViewController(for state: SearchState) {
         
-        if let child = viewController {
+        if let child = currentViewController {
             child.remove()
         }
         
@@ -56,19 +59,27 @@ class SearchStateController: UIViewController {
         case .idle:
             print("Idle state")
             let idleController = SearchIdleController()
-            viewController = idleController
-            add(idleController)
+            setViewController(idleController)
             break
         case .empty:
             print("Empty state")
             break
-        case .result:
+        case .result(let result):
             print("Result state")
+            let restultController = SearchResultViewController(searchResult: result)
+            setViewController(restultController)
             break
         case .error:
             print("Error state")
+            let errorController = SearchErrorController()
+            setViewController(errorController)
             break
         }
+    }
+    
+    private func setViewController(_ viewController: UIViewController) {
+        currentViewController = viewController
+        add(viewController)
     }
 
     override func didReceiveMemoryWarning() {
@@ -95,7 +106,45 @@ extension SearchStateController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        
+        if let request = searchDataRequest {
+            request.cancel()
+        }
+        
+        if searchText.isEmpty {
+            print("Empty text")
+            displayViewController(for: .idle)
+            return
+        }
+        
+        let query = QueryBuilder()
+            .search(withParameters: searchText)
+            .build()
+        
+        let request = Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResult) in
+            
+            guard result.count > 0 else {
+                self.displayViewController(for: .empty)
+                return
+            }
+            
+            for (index, recipe) in result.recipes.enumerated() {
+                Service.request(recipe.image_url, complition: { (image) in
+                    guard let image = image else { return }
+                    recipe.image = image
+                    
+                    if let controller = self.currentViewController as? SearchResultViewController {
+                        controller.updateContent(at: index)
+                    }
+                })
+            }
+            
+            DispatchQueue.main.async {
+                self.displayViewController(for: .result(result))
+            }
+        }
+        
+        searchDataRequest = request
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
@@ -113,6 +162,7 @@ extension SearchStateController: UISearchBarDelegate {
 extension SearchStateController {
     
     enum SearchState {
-        case idle, empty, result, error
+        case result(SearchResult)
+        case idle, empty, error
     }
 }

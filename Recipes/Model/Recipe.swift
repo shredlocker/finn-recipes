@@ -6,16 +6,25 @@
 //  Copyright © 2018 Granheim Brustad , Henrik. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Recipe: Decodable {
     let image_url: URL
     let title: String
     let f2f_url: URL
     let ingredients: [String]?
+    var image: UIImage?
+    
+    enum CodingKeys: String, CodingKey {
+        case image_url, title, f2f_url, ingredients
+    }
     
     var ID: String {
         return f2f_url.lastPathComponent
+    }
+    
+    init() {
+        fatalError()
     }
 }
 

@@ -19,6 +19,8 @@
 		DA10A16020EA47D8007CD0C4 /* SearchErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */; };
 		DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */; };
 		DA10A16420EA4A91007CD0C4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16320EA4A91007CD0C4 /* Extensions.swift */; };
+		DAB2DEF120EB572E00761A3A /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */; };
+		DAB2DEF320EB8D1100761A3A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF220EB8D1100761A3A /* GradientView.swift */; };
 		DAD6217220E655A30098CB2F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; };
 		DAD6217320E655A30098CB2F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAD6217620E660780098CB2F /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6217520E660780098CB2F /* Recipe.swift */; };
@@ -53,6 +55,8 @@
 		DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchErrorController.swift; sourceTree = "<group>"; };
 		DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdleController.swift; sourceTree = "<group>"; };
 		DA10A16320EA4A91007CD0C4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		DAB2DEF220EB8D1100761A3A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		DAD6217020E652340098CB2F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		DAD6217520E660780098CB2F /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				DAD6217820E6608C0098CB2F /* Controller */,
+				DAB2DEEF20EB571000761A3A /* View */,
 				DAD6217720E6607F0098CB2F /* Model */,
 				DA09B2A020E64CF700635934 /* AppDelegate.swift */,
 				DA10A16320EA4A91007CD0C4 /* Extensions.swift */,
@@ -98,6 +103,15 @@
 				DA09B2AC20E64CF800635934 /* Info.plist */,
 			);
 			path = Recipes;
+			sourceTree = "<group>";
+		};
+		DAB2DEEF20EB571000761A3A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */,
+				DAB2DEF220EB8D1100761A3A /* GradientView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		DAD6216F20E652340098CB2F /* Frameworks */ = {
@@ -212,7 +226,9 @@
 				DA09B2A120E64CF700635934 /* AppDelegate.swift in Sources */,
 				DA10A15A20EA1079007CD0C4 /* Service.swift in Sources */,
 				DA10A16420EA4A91007CD0C4 /* Extensions.swift in Sources */,
+				DAB2DEF320EB8D1100761A3A /* GradientView.swift in Sources */,
 				DA10A15E20EA47C5007CD0C4 /* SearchEmptyController.swift in Sources */,
+				DAB2DEF120EB572E00761A3A /* SearchResultCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +302,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
