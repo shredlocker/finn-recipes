@@ -63,6 +63,8 @@ class SearchStateController: UIViewController {
             break
         case .empty:
             print("Empty state")
+            let emptyController = SearchEmptyController()
+            setViewController(emptyController)
             break
         case .result(let result):
             print("Result state")
@@ -121,7 +123,15 @@ extension SearchStateController: UISearchBarDelegate {
             .search(withParameters: searchText)
             .build()
         
-        let request = Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResult) in
+        let request = Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResult?, error) in
+            
+            if let error = error {
+                print(error)
+                self.displayViewController(for: .error)
+                return
+            }
+            
+            guard let result = result else { return }
             
             guard result.count > 0 else {
                 self.displayViewController(for: .empty)

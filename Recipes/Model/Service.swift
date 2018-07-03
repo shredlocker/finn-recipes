@@ -17,11 +17,16 @@ class Service {
                             get: URL(string: "get", relativeTo: api))
     
     @discardableResult
-    static func execute<T: Decodable>(_ query: Query, withUrl url: URL?, complition: @escaping (T) -> Void) -> Alamofire.DataRequest? {
+    static func execute<T: Decodable>(_ query: Query, withUrl url: URL?, complition: @escaping (T?, Error?) -> Void) -> Alamofire.DataRequest? {
         guard let url = url else { return nil }
         
         let request = Alamofire.request(url, method: .post, parameters: query.operations, encoding: URLEncoding.default, headers: nil)
         request.responseData { (response) in
+            
+            if let error = error(response) {
+                complition(nil, error)
+                return
+            }
             
             guard let data = response.value else {
                 print("No data")
@@ -31,7 +36,7 @@ class Service {
             do {
                 let decoder = JSONDecoder()
                 let object = try decoder.decode(T.self, from: data)
-                complition(object)
+                complition(object, nil)
                 
             } catch let jsonError {
                 print("Error decoding JSON,", jsonError)
@@ -58,4 +63,18 @@ class Service {
         return request
     }
     
+}
+
+extension Service {
+    
+    static func error(_ response: Alamofire.DataResponse<Data>) -> Error? {
+        if let r = response.response, let url = response.request?.url {
+            if  r.statusCode != 200 {
+                let error = Alamofire.AFError.invalidURL(url: url)
+                return error
+            }
+        }
+        
+        return nil
+    }
 }
