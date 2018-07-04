@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA08069820ECB9CC0012C27B /* SearchLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA08069720ECB9CC0012C27B /* SearchLogicController.swift */; };
 		DA09B2A120E64CF700635934 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09B2A020E64CF700635934 /* AppDelegate.swift */; };
 		DA09B2A320E64CF700635934 /* SearchStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09B2A220E64CF700635934 /* SearchStateController.swift */; };
 		DA09B2A820E64CF800635934 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA09B2A720E64CF800635934 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA08069720ECB9CC0012C27B /* SearchLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogicController.swift; sourceTree = "<group>"; };
 		DA09B29D20E64CF700635934 /* Recipes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recipes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA09B2A020E64CF700635934 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA09B2A220E64CF700635934 /* SearchStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStateController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 		DAD6217820E6608C0098CB2F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DA08069720ECB9CC0012C27B /* SearchLogicController.swift */,
 				DA09B2A220E64CF700635934 /* SearchStateController.swift */,
 				DA10A15B20EA45A6007CD0C4 /* SearchResultViewController.swift */,
 				DA10A15D20EA47C5007CD0C4 /* SearchEmptyController.swift */,
@@ -221,6 +224,7 @@
 			files = (
 				DA10A15620E9FC5B007CD0C4 /* Query.swift in Sources */,
 				DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */,
+				DA08069820ECB9CC0012C27B /* SearchLogicController.swift in Sources */,
 				DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */,
 				DA10A15C20EA45A6007CD0C4 /* SearchResultViewController.swift in Sources */,
 				DAD6217620E660780098CB2F /* Recipe.swift in Sources */,
