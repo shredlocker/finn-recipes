@@ -12,6 +12,8 @@ class SearchResultCell: UITableViewCell {
     
     static let identifier = "searchCell"
     
+    var recipe: Recipe?
+    
     let recipeImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
@@ -41,6 +43,7 @@ class SearchResultCell: UITableViewCell {
     }
     
     func reset() {
+        recipe = nil
         recipeImageView.image = nil
         titleLabel.text = nil
     }

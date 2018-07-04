@@ -12,7 +12,7 @@ class Recipe: Decodable {
     let image_url: URL
     let title: String
     let f2f_url: URL
-    let ingredients: [String]?
+    var ingredients: [String]?
     var image: UIImage?
     
     enum CodingKeys: String, CodingKey {

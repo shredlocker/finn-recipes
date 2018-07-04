@@ -18,7 +18,7 @@ class SearchResultViewController: UIViewController {
         return table
     }()
     
-    private var result: SearchResult
+    var result: SearchResult
     
     init(searchResult result: SearchResult) {
         self.result = result
@@ -40,13 +40,16 @@ class SearchResultViewController: UIViewController {
         setupSubviews()
     }
     
-    
-    
     func updateContent(at row: Int) {
         guard let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? SearchResultCell else { return }
         let recipe = result.recipes[row]
         cell.recipeImageView.image = recipe.image
         cell.titleLabel.text = recipe.title
+    }
+    
+    func recipeForCell(at location: CGPoint) -> Recipe? {
+        guard let indexPath = tableView.indexPathForRow(at: location), let cell = tableView.cellForRow(at: indexPath) as? SearchResultCell else { return nil }
+        return cell.recipe
     }
     
     private func setupSubviews() {
@@ -58,11 +61,6 @@ class SearchResultViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
     }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 
 }
 
@@ -71,7 +69,8 @@ extension SearchResultViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultCell.identifier, for: indexPath) as! SearchResultCell
         cell.reset()
-        guard let image = result.recipes[indexPath.row].image else { return cell }
+        cell.recipe = result.recipes[indexPath.row]
+        guard let image = cell.recipe?.image else { return cell }
         cell.recipeImageView.image = image
         cell.titleLabel.text = result.recipes[indexPath.row].title
         return cell
@@ -88,5 +87,37 @@ extension SearchResultViewController: UITableViewDataSource {
 
 extension SearchResultViewController: UITableViewDelegate {
     
-    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("Will begin scroll")
+        if scrollView.canBecomeFirstResponder { scrollView.becomeFirstResponder() }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -32,6 +32,9 @@ class SearchStateController: UIViewController {
         
         searchBar.delegate = self
         
+        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.headerText]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationController?.navigationBar.tintColor = .headerText
         navigationController?.navigationBar.barTintColor = .background
         navigationItem.titleView = searchBar
         
@@ -44,6 +47,35 @@ class SearchStateController: UIViewController {
     @objc func handleTap(sender: UITapGestureRecognizer) {
         print("Tap tap tap tap tap")
         dismiss(searchBar)
+        
+        switch state {
+            
+        case .result:
+            if let controller = currentViewController as? SearchResultViewController {
+                let location = sender.location(in: controller.tableView)
+                guard let recipe = controller.recipeForCell(at: location) else { return }
+                let recipeController = RecipeViewController(recipe: recipe)
+                navigationController?.pushViewController(recipeController, animated: true)
+                
+                let query = QueryBuilder()
+                    .id(recipe.ID)
+                    .build()
+                
+                Service.execute(query, withUrl: Service.endpoints.get) { (result: RecipeResult?, error) in
+                    print("yaaaaaap")
+                    guard let result = result else { return }
+                    print("yoiiiiiiiå")
+                    if let ingredients = result.recipe.ingredients {
+                        print("jiiiippppe")
+                        recipeController.update(ingredients: ingredients)
+                    }
+                }
+            }
+            break
+            
+        default:
+            break
+        }
     }
     
     private func displayViewController(for state: SearchState) {
@@ -52,7 +84,7 @@ class SearchStateController: UIViewController {
             child.remove()
         }
         
-        // Update class property state
+        // Update class property
         self.state = state
         
         switch state {
@@ -82,10 +114,6 @@ class SearchStateController: UIViewController {
     private func setViewController(_ viewController: UIViewController) {
         currentViewController = viewController
         add(viewController)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
 }
 
