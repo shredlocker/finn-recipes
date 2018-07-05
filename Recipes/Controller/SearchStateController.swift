@@ -83,20 +83,7 @@ extension SearchStateController: SearchLogicDelegate {
     
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveResult result: SearchResult) {
         print("Did recieve result")
-        for (index, recipe) in result.recipes.enumerated() {
-            let dataTask = Service.request(recipe.image_url, complition: { (image) in
-                guard let image = image else { return }
-                recipe.image = image
-                
-                DispatchQueue.main.async {
-                    if let controller = self.currentViewController as? SearchResultController {
-                        controller.updateContent(at: index)
-                    }
-                }
-            })
-            dataTask?.resume()
-        }
-        resultController.setResult(result)
+        resultController.updateContent(with: result)
         if state != .result { displayViewController(for: .result) }
     }
     

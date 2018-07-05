@@ -23,9 +23,21 @@ class SearchResultController: UIViewController {
         setupSubviews()
     }
     
-    func setResult(_ result: SearchResult) {
-        self.result = result
+    func updateContent(with searchResult: SearchResult) {
+        self.result = searchResult
         tableView.reloadData()
+        
+        for (index, recipe) in searchResult.recipes.enumerated() {
+            let dataTask = Service.request(recipe.image_url, complition: { (image) in
+                guard let image = image else { return }
+                recipe.image = image
+                
+                DispatchQueue.main.async {
+                    self.updateContent(at: index)
+                }
+            })
+            dataTask?.resume()
+        }
     }
     
     func updateContent(at row: Int) {
