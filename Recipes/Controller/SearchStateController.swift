@@ -1,6 +1,12 @@
 
 import UIKit
 
+extension SearchStateController {
+    enum ViewState: Int {
+        case result, none, empty, error
+    }
+}
+
 class SearchStateController: UIViewController {
     
     private var state: ViewState = .none
@@ -73,14 +79,6 @@ class SearchStateController: UIViewController {
 
 extension SearchStateController: SearchLogicDelegate {
     
-    func searchLogicControllerShouldBeginSearch(_ searchLogicController: SearchLogicController) {
-        print("Should begin search")
-    }
-    
-    func searchLogicControllerDidBeginSearch(_ searchLogicController: SearchLogicController) {
-        print("Did begin search")
-    }
-    
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveResult result: SearchResult) {
         print("Did recieve result")
         resultController.updateContent(with: result)
@@ -95,13 +93,5 @@ extension SearchStateController: SearchLogicDelegate {
     func searchLogicControllerDidRecieveEmptyResult(_ searchLogicController: SearchLogicController) {
         print("Empty result")
         displayViewController(for: .empty)
-    }
-}
-
-
-
-extension SearchStateController {
-    enum ViewState: Int {
-        case result, none, empty, error
     }
 }
