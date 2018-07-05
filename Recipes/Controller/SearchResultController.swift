@@ -82,16 +82,23 @@ extension SearchResultController: UITableViewDelegate {
         let recipeController = RecipeViewController(recipe: recipe)
         navigationController?.pushViewController(recipeController, animated: true)
         
-        let query = QueryBuilder()
+        let queryItems = QueryBuilder()
             .id(recipe.ID)
             .build()
         
-        Service.execute(query, withUrl: Service.endpoints.get) { (result: RecipeResult?, error) in
+        guard let searchURL = Service.endpoints.get else { return }
+        guard var components = URLComponents(url: searchURL, resolvingAgainstBaseURL: true) else { return }
+        components.queryItems = queryItems
+        
+        let dataTask = Service.request(components.url) { (result: RecipeResult?, error) in
             guard let result = result else { return }
             if let ingredients = result.recipe.ingredients {
-                recipeController.update(ingredients: ingredients)
+                DispatchQueue.main.async {
+                    recipeController.update(ingredients: ingredients)
+                }
             }
         }
+        dataTask?.resume()
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

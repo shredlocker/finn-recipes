@@ -23,24 +23,8 @@
 		DAB2DEF120EB572E00761A3A /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */; };
 		DAB2DEF320EB8D1100761A3A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF220EB8D1100761A3A /* GradientView.swift */; };
 		DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF420EBB52700761A3A /* RecipeViewController.swift */; };
-		DAD6217220E655A30098CB2F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; };
-		DAD6217320E655A30098CB2F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DAD6217020E652340098CB2F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DAD6217620E660780098CB2F /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6217520E660780098CB2F /* Recipe.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		DAD6217420E655A30098CB2F /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				DAD6217320E655A30098CB2F /* Alamofire.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DA08069720ECB9CC0012C27B /* SearchLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLogicController.swift; sourceTree = "<group>"; };
@@ -61,7 +45,6 @@
 		DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		DAB2DEF220EB8D1100761A3A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		DAB2DEF420EBB52700761A3A /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
-		DAD6217020E652340098CB2F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		DAD6217520E660780098CB2F /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -70,7 +53,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAD6217220E655A30098CB2F /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +103,6 @@
 		DAD6216F20E652340098CB2F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DAD6217020E652340098CB2F /* Alamofire.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,7 +142,6 @@
 				DA09B29920E64CF700635934 /* Sources */,
 				DA09B29A20E64CF700635934 /* Frameworks */,
 				DA09B29B20E64CF700635934 /* Resources */,
-				DAD6217420E655A30098CB2F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

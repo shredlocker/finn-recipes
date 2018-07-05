@@ -1,6 +1,5 @@
 
 import UIKit
-import Alamofire
 
 protocol SearchLogicDelegate: class {
     func searchLogicControllerShouldBeginSearch(_ searchLogicController: SearchLogicController)
@@ -33,7 +32,7 @@ class SearchLogicController: UIViewController {
     var state: SearchState = .idle
     weak var delegate: SearchLogicDelegate?
     
-    private var searchDataRequest: Alamofire.DataRequest?
+    private var currentDataTask: URLSessionDataTask?
     private var currentSearchText = ""
     
     // MARK: Implementation
@@ -100,8 +99,8 @@ extension SearchLogicController: UISearchBarDelegate {
             break
         }
         
-        if let request = searchDataRequest {
-            request.cancel()
+        if let dataTask = currentDataTask {
+            dataTask.cancel()
         }
         
         if searchText.isEmpty {
@@ -109,34 +108,40 @@ extension SearchLogicController: UISearchBarDelegate {
             return
         }
         
-        let query = QueryBuilder()
+        let queryItems = QueryBuilder()
             .search(withParameters: searchText)
             .build()
         
-        let request = Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResult?, error) in
+        guard let searchURL = Service.endpoints.search else { return }
+        guard var components = URLComponents(url: searchURL, resolvingAgainstBaseURL: true) else { return }
+        components.queryItems = queryItems
+        
+        let dataTask = Service.request(components.url) { (result: SearchResult?, error) in
+            
             if let error = error {
                 DispatchQueue.main.async {
                     self.delegate?.searchLogicController(self, didRecieveError: error)
                 }
                 return
             }
-            
+
             guard let result = result else { return }
-            
+
             guard result.count > 0 else {
                 DispatchQueue.main.async {
                     self.delegate?.searchLogicControllerDidRecieveEmptyResult(self)
                 }
                 return
             }
-            
+
             self.currentSearchText = searchText
             DispatchQueue.main.async {
                 self.delegate?.searchLogicController(self, didRecieveResult: result)
             }
         }
         
-        searchDataRequest = request
+        dataTask?.resume()
+        currentDataTask = dataTask
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {

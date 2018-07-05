@@ -1,7 +1,6 @@
 
 
 import UIKit
-import Alamofire
 
 class Service {
     
@@ -10,22 +9,15 @@ class Service {
     static let endpoints = (search: URL(string: "search", relativeTo: api),
                             get: URL(string: "get", relativeTo: api))
     
-    @discardableResult
-    static func execute<T: Decodable>(_ query: Query, withUrl url: URL?, complition: @escaping (T?, Error?) -> Void) -> Alamofire.DataRequest? {
+    static func request<T: Decodable>(_ url: URL?, complition: @escaping (T?, Error?) -> Void) -> URLSessionDataTask? {
         guard let url = url else { return nil }
         
-        let request = Alamofire.request(url, method: .post, parameters: query.operations, encoding: URLEncoding.default, headers: nil)
-        request.responseData { (response) in
-            
-            if let error = error(response) {
-                complition(nil, error)
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let _ = error {
                 return
             }
             
-            guard let data = response.value else {
-                print("No data")
-                return
-            }
+            guard let data = data else { return }
             
             do {
                 let decoder = JSONDecoder()
@@ -37,38 +29,26 @@ class Service {
             }
         }
         
-        return request
+        return dataTask
     }
     
     @discardableResult
-    static func request(_ imageUrl: URL?, complition: @escaping (UIImage?) -> Void) -> Alamofire.DataRequest? {
+    static func request(_ imageUrl: URL?, complition: @escaping (UIImage?) -> Void) -> URLSessionDataTask? {
         guard let url = imageUrl else { return nil}
         
-        let request = Alamofire.request(url)
-        request.responseData { (response) in
-            guard let data = response.data, let image = UIImage(data: data  ) else {
-                complition(nil)
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let _ = error {
                 return
             }
+            
+            guard let data = data else { return }
+            guard let image = UIImage(data: data) else { return }
             
             complition(image)
         }
         
-        return request
-    }
-    
-}
-
-extension Service {
-    
-    static func error(_ response: Alamofire.DataResponse<Data>) -> Error? {
-        if let r = response.response, let url = response.request?.url {
-            if  r.statusCode != 200 {
-                let error = Alamofire.AFError.invalidURL(url: url)
-                return error
-            }
-        }
+        return dataTask
         
-        return nil
     }
+    
 }
