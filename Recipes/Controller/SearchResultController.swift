@@ -8,9 +8,9 @@
 
 import UIKit
 
-class SearchResultViewController: UIViewController {
+class SearchResultController: UIViewController {
     
-    let tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.backgroundColor = .background
         table.separatorStyle = .none
@@ -18,18 +18,7 @@ class SearchResultViewController: UIViewController {
         return table
     }()
     
-    var result: SearchResult
-    
-    init(searchResult result: SearchResult) {
-        self.result = result
-        super.init(nibName: nil, bundle: nil)
-        
-        print("Result count", result.count)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var result = SearchResult.empty()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +29,17 @@ class SearchResultViewController: UIViewController {
         setupSubviews()
     }
     
+    func setResult(_ result: SearchResult) {
+        self.result = result
+        tableView.reloadData()
+    }
+    
     func updateContent(at row: Int) {
         guard let cell = tableView.cellForRow(at: IndexPath(row: row, section: 0)) as? SearchResultCell else { return }
         let recipe = result.recipes[row]
         cell.recipeImageView.image = recipe.image
         cell.titleLabel.text = recipe.title
+        cell.gradientView.isHidden = false
     }
     
     func recipeForCell(at location: CGPoint) -> Recipe? {
@@ -59,12 +54,12 @@ class SearchResultViewController: UIViewController {
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        ])
     }
 
 }
 
-extension SearchResultViewController: UITableViewDataSource {
+extension SearchResultController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultCell.identifier, for: indexPath) as! SearchResultCell
@@ -73,6 +68,7 @@ extension SearchResultViewController: UITableViewDataSource {
         guard let image = cell.recipe?.image else { return cell }
         cell.recipeImageView.image = image
         cell.titleLabel.text = result.recipes[indexPath.row].title
+        cell.gradientView.isHidden = false
         return cell
     }
     
@@ -85,12 +81,9 @@ extension SearchResultViewController: UITableViewDataSource {
     }
 }
 
-extension SearchResultViewController: UITableViewDelegate {
+extension SearchResultController: UITableViewDelegate {
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print("Will begin scroll")
-        if scrollView.canBecomeFirstResponder { scrollView.becomeFirstResponder() }
-    }
+    
 }
 
 

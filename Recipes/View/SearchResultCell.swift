@@ -46,6 +46,7 @@ class SearchResultCell: UITableViewCell {
         recipe = nil
         recipeImageView.image = nil
         titleLabel.text = nil
+        gradientView.isHidden = true
     }
     
     private func setupSubviews() {

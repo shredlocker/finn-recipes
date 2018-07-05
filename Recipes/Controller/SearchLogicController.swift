@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 
 protocol SearchLogicDelegate: class {
+    func searchLogicControllerShouldBeginSearch(_ searchLogicController: SearchLogicController)
     func searchLogicControllerDidBeginSearch(_ searchLogicController: SearchLogicController)
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveResult result: SearchResult)
     func searchLogicControllerDidRecieveEmptyResult(_ searchLogicController: SearchLogicController)
@@ -31,9 +32,13 @@ class SearchLogicController: UIViewController {
     
     // MARK: Properties
     
-    private var state: SearchState = .idle
-    private var searchDataRequest: Alamofire.DataRequest?
+    var state: SearchState = .idle
     weak var delegate: SearchLogicDelegate?
+    
+    private var searchDataRequest: Alamofire.DataRequest?
+    private var currentSearchText = ""
+    
+    // MARK: Implementation
     
     convenience init() {
         self.init(nibName: nil, bundle: nil)
@@ -45,29 +50,44 @@ class SearchLogicController: UIViewController {
         print("view did load", navigationItem)
         navigationItem.titleView = searchBar
     }
+    
+    func pauseSearch() {
+        state = .paused
+        dismiss(searchBar, hideCancel: true)
+        if let text = searchBar.text {
+            if text.isEmpty { searchBar.text = currentSearchText }
+        }
+    }
+    
+    private func dismiss(_ searchBar: UISearchBar, hideCancel cancel: Bool) {
+        if searchBar.canResignFirstResponder {
+            searchBar.setShowsCancelButton(!cancel, animated: true)
+            searchBar.resignFirstResponder()
+        }
+    }
 
 }
 
 extension SearchLogicController: UISearchBarDelegate {
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        print("Should begin editing")
+        if state == .paused { state = .began }
         searchBar.setShowsCancelButton(true, animated: true)
+        delegate?.searchLogicControllerShouldBeginSearch(self)
         return true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         print("Cancel button clicked")
-        dismiss(searchBar)
+        dismiss(searchBar, hideCancel: true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("Searc button clicked!")
-        dismiss(searchBar)
+        dismiss(searchBar, hideCancel: true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         switch state {
         case .idle:
             state = .began
@@ -81,18 +101,16 @@ extension SearchLogicController: UISearchBarDelegate {
             request.cancel()
         }
         
-//        if searchText.isEmpty {
-//            print("Empty text")
-//            displayViewController(for: .idle)
-//            return
-//        }
+        if searchText.isEmpty {
+            print("Empty text")
+            return
+        }
         
         let query = QueryBuilder()
             .search(withParameters: searchText)
             .build()
         
         let request = Service.execute(query, withUrl: Service.endpoints.search) { (result: SearchResult?, error) in
-            
             if let error = error {
                 DispatchQueue.main.async {
                     self.delegate?.searchLogicController(self, didRecieveError: error)
@@ -109,22 +127,10 @@ extension SearchLogicController: UISearchBarDelegate {
                 return
             }
             
+            self.currentSearchText = searchText
             DispatchQueue.main.async {
                 self.delegate?.searchLogicController(self, didRecieveResult: result)
             }
-            
-//            for (index, recipe) in result.recipes.enumerated() {
-//                Service.request(recipe.image_url, complition: { (image) in
-//                    guard let image = image else { return }
-//                    recipe.image = image
-//
-////                    if let controller = self.currentViewController as? SearchResultViewController {
-////                        controller.updateContent(at: index)
-////                    }
-//                })
-//            }
-            
-            
         }
         
         searchDataRequest = request
@@ -133,19 +139,12 @@ extension SearchLogicController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         print("Did end editing")
     }
-    
-    private func dismiss(_ searchBar: UISearchBar) {
-        if searchBar.canResignFirstResponder {
-            searchBar.setShowsCancelButton(false, animated: true)
-            searchBar.resignFirstResponder()
-        }
-    }
 }
 
 extension SearchLogicController {
     
-    enum SearchState {
-        case idle, began, ended, cancelled
+    enum SearchState: Int {
+        case idle, began, paused, ended, cancelled
     }
 }
 

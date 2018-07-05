@@ -10,13 +10,22 @@ import UIKit
 
 class SearchStateController: UIViewController {
     
-    private var state: ViewState = .idle
+    private var state: ViewState = .error
     
     private let searchLogicController: SearchLogicController
+    // State controllers
+    private let emptyController: SearchEmptyController
+    private let errorController: SearchErrorController
+    private let resultController: SearchResultController
+    private let idleController: SearchIdleController
     private var currentViewController: UIViewController?
     
     init() {
-        self.searchLogicController = SearchLogicController()
+        searchLogicController = SearchLogicController()
+        emptyController = SearchEmptyController()
+        errorController = SearchErrorController()
+        resultController = SearchResultController()
+        idleController = SearchIdleController()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,10 +53,19 @@ class SearchStateController: UIViewController {
     @objc func handleTap(sender: UITapGestureRecognizer) {
         print("Tap tap tap tap tap")
         
+        switch searchLogicController.state {
+        case .began:
+            print("Should dismiss keyboard")
+            searchLogicController.pauseSearch()
+            resultController.tableView.isUserInteractionEnabled = true
+            return
+        default:
+            break
+        }
+        
         switch state {
-            
         case .result:
-            if let controller = currentViewController as? SearchResultViewController {
+            if let controller = currentViewController as? SearchResultController {
                 let location = sender.location(in: controller.tableView)
                 guard let recipe = controller.recipeForCell(at: location) else { return }
                 let recipeController = RecipeViewController(recipe: recipe)
@@ -58,11 +76,8 @@ class SearchStateController: UIViewController {
                     .build()
                 
                 Service.execute(query, withUrl: Service.endpoints.get) { (result: RecipeResult?, error) in
-                    print("yaaaaaap")
                     guard let result = result else { return }
-                    print("yoiiiiiiiå")
                     if let ingredients = result.recipe.ingredients {
-                        print("jiiiippppe")
                         recipeController.update(ingredients: ingredients)
                     }
                 }
@@ -75,6 +90,10 @@ class SearchStateController: UIViewController {
     }
     
     private func displayViewController(for state: ViewState) {
+        // State did not change
+        if self.state == state {
+            return
+        }
         
         if let child = currentViewController {
             child.remove()
@@ -85,23 +104,15 @@ class SearchStateController: UIViewController {
         
         switch state {
         case .idle:
-            print("Idle state")
-            let idleController = SearchIdleController()
             setViewController(idleController)
             break
         case .empty:
-            print("Empty state")
-            let emptyController = SearchEmptyController()
             setViewController(emptyController)
             break
-        case .result(let result):
-            print("Result state")
-            let restultController = SearchResultViewController(searchResult: result)
-            setViewController(restultController)
+        case .result:
+            setViewController(resultController)
             break
         case .error:
-            print("Error state")
-            let errorController = SearchErrorController()
             setViewController(errorController)
             break
         }
@@ -115,13 +126,29 @@ class SearchStateController: UIViewController {
 
 extension SearchStateController: SearchLogicDelegate {
     
+    func searchLogicControllerShouldBeginSearch(_ searchLogicController: SearchLogicController) {
+        print("Should begin search")
+        resultController.tableView.isUserInteractionEnabled = false
+    }
+    
     func searchLogicControllerDidBeginSearch(_ searchLogicController: SearchLogicController) {
         print("Did begin search")
     }
     
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveResult result: SearchResult) {
         print("Did recieve result")
-        displayViewController(for: .result(result))
+        for (index, recipe) in result.recipes.enumerated() {
+            Service.request(recipe.image_url, complition: { (image) in
+                guard let image = image else { return }
+                recipe.image = image
+
+                if let controller = self.currentViewController as? SearchResultController {
+                    controller.updateContent(at: index)
+                }
+            })
+        }
+        resultController.setResult(result)
+        displayViewController(for: .result)
     }
     
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveError error: Error) {
@@ -133,15 +160,12 @@ extension SearchStateController: SearchLogicDelegate {
         print("Empty result")
         displayViewController(for: .empty)
     }
-    
 }
 
 
 
 extension SearchStateController {
-    
-    enum ViewState {
-        case result(SearchResult)
-        case idle, empty, error
+    enum ViewState: Int {
+        case result, idle, empty, error
     }
 }

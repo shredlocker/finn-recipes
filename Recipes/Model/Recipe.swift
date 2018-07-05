@@ -31,6 +31,15 @@ class Recipe: Decodable {
 class SearchResult: Decodable {
     let count: Int
     let recipes: [Recipe]
+    
+    init(count: Int, recipes: [Recipe]) {
+        self.count = count
+        self.recipes = recipes
+    }
+    
+    static func empty() -> SearchResult {
+        return SearchResult(count: 0, recipes: [])
+    }
 }
 
 class RecipeResult: Decodable {

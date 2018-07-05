@@ -15,7 +15,7 @@
 		DA10A15620E9FC5B007CD0C4 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15520E9FC5B007CD0C4 /* Query.swift */; };
 		DA10A15820E9FD07007CD0C4 /* QueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15720E9FD07007CD0C4 /* QueryBuilder.swift */; };
 		DA10A15A20EA1079007CD0C4 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15920EA1079007CD0C4 /* Service.swift */; };
-		DA10A15C20EA45A6007CD0C4 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15B20EA45A6007CD0C4 /* SearchResultViewController.swift */; };
+		DA10A15C20EA45A6007CD0C4 /* SearchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15B20EA45A6007CD0C4 /* SearchResultController.swift */; };
 		DA10A15E20EA47C5007CD0C4 /* SearchEmptyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15D20EA47C5007CD0C4 /* SearchEmptyController.swift */; };
 		DA10A16020EA47D8007CD0C4 /* SearchErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */; };
 		DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */; };
@@ -53,7 +53,7 @@
 		DA10A15520E9FC5B007CD0C4 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		DA10A15720E9FD07007CD0C4 /* QueryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryBuilder.swift; sourceTree = "<group>"; };
 		DA10A15920EA1079007CD0C4 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
-		DA10A15B20EA45A6007CD0C4 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
+		DA10A15B20EA45A6007CD0C4 /* SearchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultController.swift; sourceTree = "<group>"; };
 		DA10A15D20EA47C5007CD0C4 /* SearchEmptyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEmptyController.swift; sourceTree = "<group>"; };
 		DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchErrorController.swift; sourceTree = "<group>"; };
 		DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdleController.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 			children = (
 				DA08069720ECB9CC0012C27B /* SearchLogicController.swift */,
 				DA09B2A220E64CF700635934 /* SearchStateController.swift */,
-				DA10A15B20EA45A6007CD0C4 /* SearchResultViewController.swift */,
+				DA10A15B20EA45A6007CD0C4 /* SearchResultController.swift */,
 				DA10A15D20EA47C5007CD0C4 /* SearchEmptyController.swift */,
 				DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */,
 				DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */,
@@ -226,7 +226,7 @@
 				DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */,
 				DA08069820ECB9CC0012C27B /* SearchLogicController.swift in Sources */,
 				DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */,
-				DA10A15C20EA45A6007CD0C4 /* SearchResultViewController.swift in Sources */,
+				DA10A15C20EA45A6007CD0C4 /* SearchResultController.swift in Sources */,
 				DAD6217620E660780098CB2F /* Recipe.swift in Sources */,
 				DA10A15820E9FD07007CD0C4 /* QueryBuilder.swift in Sources */,
 				DA09B2A320E64CF700635934 /* SearchStateController.swift in Sources */,
