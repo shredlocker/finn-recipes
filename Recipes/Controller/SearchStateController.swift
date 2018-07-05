@@ -34,28 +34,12 @@ class SearchStateController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.tintColor = .headerText
         navigationController?.navigationBar.barTintColor = .background
+        navigationController?.navigationBar.barStyle = .black
         navigationItem.titleView = searchLogicController.searchBar
         searchLogicController.delegate = self
         
         displayViewController(for: .none)
     }
-    
-//    @objc func handleTap(sender: UITapGestureRecognizer) {
-//        print("Tap tap tap tap tap")
-//
-//        switch state {
-//        case .result:
-//            if let controller = currentViewController as? SearchResultController {
-//                let location = sender.location(in: controller.tableView)
-//                guard let recipe = controller.recipeForCell(at: location) else { return }
-//
-//            }
-//            break
-//
-//        default:
-//            break
-//        }
-//    }
     
     private func displayViewController(for state: ViewState) {
         if let child = currentViewController {

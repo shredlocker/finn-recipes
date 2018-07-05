@@ -36,11 +36,6 @@ class SearchResultController: UIViewController {
         cell.gradientView.isHidden = false
     }
     
-//    func recipeForCell(at location: CGPoint) -> Recipe? {
-//        guard let indexPath = tableView.indexPathForRow(at: location), let cell = tableView.cellForRow(at: indexPath) as? SearchResultCell else { return nil }
-//        return cell.recipe
-//    }
-    
     private func setupSubviews() {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
