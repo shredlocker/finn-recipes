@@ -45,7 +45,12 @@ class RecipeViewController: UIViewController {
     
     func update(ingredients: [String]) {
         recipe.ingredients = ingredients
-        ingredientsView.reloadData()
+        
+        let indexPaths = (0..<ingredients.count).map { (row) -> IndexPath in
+            return IndexPath(row: row, section: 0)
+        }
+        
+        ingredientsView.insertRows(at: indexPaths, with: .fade)
     }
     
     private func setupSubviews() {
@@ -61,7 +66,7 @@ class RecipeViewController: UIViewController {
             ingredientsView.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             ingredientsView.rightAnchor.constraint(equalTo: view.rightAnchor),
             ingredientsView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        ])
     }
 }
 
