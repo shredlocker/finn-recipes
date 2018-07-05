@@ -1,10 +1,3 @@
-//
-//  SearchLogicViewController.swift
-//  Recipes
-//
-//  Created by Granheim Brustad , Henrik on 04/07/2018.
-//  Copyright © 2018 Granheim Brustad , Henrik. All rights reserved.
-//
 
 import UIKit
 import Alamofire
@@ -53,7 +46,7 @@ class SearchLogicController: UIViewController {
     
     func pauseSearch() {
         state = .paused
-        dismiss(searchBar, hideCancel: true)
+        dismiss(searchBar, hideCancel: false)
         if let text = searchBar.text {
             if text.isEmpty { searchBar.text = currentSearchText }
         }
