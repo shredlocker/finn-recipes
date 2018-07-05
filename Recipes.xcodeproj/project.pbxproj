@@ -12,7 +12,6 @@
 		DA09B2A320E64CF700635934 /* SearchStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09B2A220E64CF700635934 /* SearchStateController.swift */; };
 		DA09B2A820E64CF800635934 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA09B2A720E64CF800635934 /* Assets.xcassets */; };
 		DA09B2AB20E64CF800635934 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA09B2A920E64CF800635934 /* LaunchScreen.storyboard */; };
-		DA10A15620E9FC5B007CD0C4 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15520E9FC5B007CD0C4 /* Query.swift */; };
 		DA10A15820E9FD07007CD0C4 /* QueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15720E9FD07007CD0C4 /* QueryBuilder.swift */; };
 		DA10A15A20EA1079007CD0C4 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15920EA1079007CD0C4 /* Service.swift */; };
 		DA10A15C20EA45A6007CD0C4 /* SearchResultController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15B20EA45A6007CD0C4 /* SearchResultController.swift */; };
@@ -34,7 +33,6 @@
 		DA09B2A720E64CF800635934 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA09B2AA20E64CF800635934 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA09B2AC20E64CF800635934 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA10A15520E9FC5B007CD0C4 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		DA10A15720E9FD07007CD0C4 /* QueryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryBuilder.swift; sourceTree = "<group>"; };
 		DA10A15920EA1079007CD0C4 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		DA10A15B20EA45A6007CD0C4 /* SearchResultController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultController.swift; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				DAD6217520E660780098CB2F /* Recipe.swift */,
-				DA10A15520E9FC5B007CD0C4 /* Query.swift */,
 				DA10A15720E9FD07007CD0C4 /* QueryBuilder.swift */,
 				DA10A15920EA1079007CD0C4 /* Service.swift */,
 			);
@@ -202,7 +199,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA10A15620E9FC5B007CD0C4 /* Query.swift in Sources */,
 				DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */,
 				DA08069820ECB9CC0012C27B /* SearchLogicController.swift in Sources */,
 				DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */,

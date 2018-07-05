@@ -49,11 +49,9 @@ class QueryBuilder {
         return self
     }
     
-    
     func build() -> [URLQueryItem] {
         return operations
     }
-    
 }
 
 extension QueryBuilder {

@@ -6,9 +6,11 @@ class Service {
     
     fileprivate static let api = URL(string: "https://food2fork.com/api/")
     
+    // Neat way: Service.endpoints.search
     static let endpoints = (search: URL(string: "search", relativeTo: api),
                             get: URL(string: "get", relativeTo: api))
     
+    // For decoding JSON
     static func request<T: Decodable>(_ url: URL?, complition: @escaping (T?, Error?) -> Void) -> URLSessionDataTask? {
         guard let url = url else { return nil }
         
@@ -32,7 +34,7 @@ class Service {
         return dataTask
     }
     
-    @discardableResult
+    // For images
     static func request(_ imageUrl: URL?, complition: @escaping (UIImage?) -> Void) -> URLSessionDataTask? {
         guard let url = imageUrl else { return nil}
         
@@ -48,7 +50,5 @@ class Service {
         }
         
         return dataTask
-        
     }
-    
 }
