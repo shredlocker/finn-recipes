@@ -7,6 +7,7 @@ class SearchResultController: UIViewController {
         let table = UITableView(frame: .zero, style: .plain)
         table.backgroundColor = .background
         table.separatorStyle = .none
+        
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -35,10 +36,10 @@ class SearchResultController: UIViewController {
         cell.gradientView.isHidden = false
     }
     
-    func recipeForCell(at location: CGPoint) -> Recipe? {
-        guard let indexPath = tableView.indexPathForRow(at: location), let cell = tableView.cellForRow(at: indexPath) as? SearchResultCell else { return nil }
-        return cell.recipe
-    }
+//    func recipeForCell(at location: CGPoint) -> Recipe? {
+//        guard let indexPath = tableView.indexPathForRow(at: location), let cell = tableView.cellForRow(at: indexPath) as? SearchResultCell else { return nil }
+//        return cell.recipe
+//    }
     
     private func setupSubviews() {
         view.addSubview(tableView)
@@ -70,13 +71,38 @@ extension SearchResultController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return view.frame.height / 5
+        return (view.frame.height - 64) / 5
     }
 }
 
 extension SearchResultController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Did select row at:", indexPath)
+        
+        NotificationCenter.default.post(name: Notification.dismissKeyboard, object: nil)
+        
+        guard let cell = tableView.cellForRow(at: indexPath) as? SearchResultCell, let recipe = cell.recipe else { return }
+        
+        let recipeController = RecipeViewController(recipe: recipe)
+        navigationController?.pushViewController(recipeController, animated: true)
+        
+        let query = QueryBuilder()
+            .id(recipe.ID)
+            .build()
+        
+        Service.execute(query, withUrl: Service.endpoints.get) { (result: RecipeResult?, error) in
+            guard let result = result else { return }
+            if let ingredients = result.recipe.ingredients {
+                recipeController.update(ingredients: ingredients)
+            }
+        }
+    }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        NotificationCenter.default.post(name: Notification.dismissKeyboard, object: nil)
+        if canBecomeFirstResponder { becomeFirstResponder() }
+    }
 }
 
 

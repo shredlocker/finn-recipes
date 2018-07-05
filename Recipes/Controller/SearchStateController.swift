@@ -3,7 +3,7 @@ import UIKit
 
 class SearchStateController: UIViewController {
     
-    private var state: ViewState = .error
+    private var state: ViewState = .none
     
     private let searchLogicController: SearchLogicController
     // State controllers
@@ -37,57 +37,27 @@ class SearchStateController: UIViewController {
         navigationItem.titleView = searchLogicController.searchBar
         searchLogicController.delegate = self
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
-        view.addGestureRecognizer(tapGesture)
-        
-        displayViewController(for: .idle)
+        displayViewController(for: .none)
     }
     
-    @objc func handleTap(sender: UITapGestureRecognizer) {
-        print("Tap tap tap tap tap")
-        
-        switch searchLogicController.state {
-        case .began:
-            print("Should dismiss keyboard")
-            searchLogicController.pauseSearch()
-            resultController.tableView.isUserInteractionEnabled = true
-            return
-        default:
-            break
-        }
-        
-        switch state {
-        case .result:
-            if let controller = currentViewController as? SearchResultController {
-                let location = sender.location(in: controller.tableView)
-                guard let recipe = controller.recipeForCell(at: location) else { return }
-                let recipeController = RecipeViewController(recipe: recipe)
-                navigationController?.pushViewController(recipeController, animated: true)
-                
-                let query = QueryBuilder()
-                    .id(recipe.ID)
-                    .build()
-                
-                Service.execute(query, withUrl: Service.endpoints.get) { (result: RecipeResult?, error) in
-                    guard let result = result else { return }
-                    if let ingredients = result.recipe.ingredients {
-                        recipeController.update(ingredients: ingredients)
-                    }
-                }
-            }
-            break
-            
-        default:
-            break
-        }
-    }
+//    @objc func handleTap(sender: UITapGestureRecognizer) {
+//        print("Tap tap tap tap tap")
+//
+//        switch state {
+//        case .result:
+//            if let controller = currentViewController as? SearchResultController {
+//                let location = sender.location(in: controller.tableView)
+//                guard let recipe = controller.recipeForCell(at: location) else { return }
+//
+//            }
+//            break
+//
+//        default:
+//            break
+//        }
+//    }
     
     private func displayViewController(for state: ViewState) {
-        // State did not change
-        if self.state == state {
-            return
-        }
-        
         if let child = currentViewController {
             child.remove()
         }
@@ -96,7 +66,7 @@ class SearchStateController: UIViewController {
         self.state = state
         
         switch state {
-        case .idle:
+        case .none:
             setViewController(idleController)
             break
         case .empty:
@@ -121,7 +91,6 @@ extension SearchStateController: SearchLogicDelegate {
     
     func searchLogicControllerShouldBeginSearch(_ searchLogicController: SearchLogicController) {
         print("Should begin search")
-        resultController.tableView.isUserInteractionEnabled = false
     }
     
     func searchLogicControllerDidBeginSearch(_ searchLogicController: SearchLogicController) {
@@ -141,7 +110,7 @@ extension SearchStateController: SearchLogicDelegate {
             })
         }
         resultController.setResult(result)
-        displayViewController(for: .result)
+        if state != .result { displayViewController(for: .result) }
     }
     
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveError error: Error) {
@@ -159,6 +128,6 @@ extension SearchStateController: SearchLogicDelegate {
 
 extension SearchStateController {
     enum ViewState: Int {
-        case result, idle, empty, error
+        case result, none, empty, error
     }
 }

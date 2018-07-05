@@ -10,6 +10,11 @@ protocol SearchLogicDelegate: class {
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveError error: Error)
 }
 
+extension Notification {
+    static let dismissKeyboard = Notification.Name("dismissKeyboard")
+}
+
+
 class SearchLogicController: UIViewController {
 
     // MARK: Subviews
@@ -36,6 +41,11 @@ class SearchLogicController: UIViewController {
     convenience init() {
         self.init(nibName: nil, bundle: nil)
         searchBar.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(dismissKeyboard), name: Notification.dismissKeyboard, object: nil)
+    }
+    
+    @objc func dismissKeyboard() {
+        dismiss(searchBar, hideCancel: true)
     }
     
     override func viewDidLoad() {

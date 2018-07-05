@@ -6,6 +6,7 @@ class RecipeViewController: UIViewController {
     let imageView: UIImageView = {
         let view = UIImageView(frame: .zero)
         view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -13,6 +14,7 @@ class RecipeViewController: UIViewController {
     let ingredientsView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
         table.backgroundColor = .background
+        table.allowsSelection = false
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
