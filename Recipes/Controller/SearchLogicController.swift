@@ -24,9 +24,7 @@ class SearchLogicController: UIViewController {
     
     let searchBar: UISearchBar = {
         let bar = UISearchBar(frame: .zero)
-        bar.keyboardAppearance = .dark
-        bar.barStyle = .blackOpaque
-        bar.tintColor = .headerText
+        bar.searchBarStyle = .minimal
         bar.placeholder = "Search"
         return bar
     }()

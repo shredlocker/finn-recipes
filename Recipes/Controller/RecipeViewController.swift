@@ -13,7 +13,6 @@ class RecipeViewController: UIViewController {
     
     let ingredientsView: UITableView = {
         let table = UITableView(frame: .zero, style: .plain)
-        table.backgroundColor = .background
         table.allowsSelection = false
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
@@ -32,7 +31,6 @@ class RecipeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .background
         navigationItem.title = recipe.title
         
         imageView.image = recipe.image

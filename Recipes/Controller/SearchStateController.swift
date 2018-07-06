@@ -34,13 +34,8 @@ class SearchStateController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .background
+        view.backgroundColor = .white
         
-        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.headerText]
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationController?.navigationBar.tintColor = .headerText
-        navigationController?.navigationBar.barTintColor = .background
-        navigationController?.navigationBar.barStyle = .black
         navigationItem.titleView = searchLogicController.searchBar
         searchLogicController.delegate = self
         

@@ -24,10 +24,12 @@ class Recipe: Decodable {
 class SearchResult: Decodable {
     let count: Int
     let recipes: [Recipe]
+    let error: String?
     
     init(count: Int, recipes: [Recipe]) {
         self.count = count
         self.recipes = recipes
+        self.error = nil
     }
     
     static func empty() -> SearchResult {

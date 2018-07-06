@@ -1,67 +1,109 @@
 
 import UIKit
 
-class SearchResultCell: UITableViewCell {
+class SearchResultView: UIView {
     
-    static let identifier = "searchCell"
-    
-    var recipe: Recipe?
-    
-    let recipeImageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
+    let effectView: UIVisualEffectView = {
+        let blur = UIBlurEffect(style: .extraLight)
+        let effectView = UIVisualEffectView(effect: blur)
+        effectView.translatesAutoresizingMaskIntoConstraints = false
+        return effectView
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .white
+        label.textColor = UIColor(white: 0, alpha: 0.7)
+        label.font = SearchResultCell.font
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let gradientView: GradientView = {
-        let view = GradientView(colors: [UIColor(white: 1.0, alpha: 0).cgColor, UIColor.background.cgColor])
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupSubviews()
+    }
+    
+    private func setupSubviews() {
+        addSubview(imageView)
+        addSubview(effectView)
+        addSubview(titleLabel)
+        
+        NSLayoutConstraint.activate([
+            imageView.leftAnchor.constraint(equalTo: leftAnchor),
+            imageView.topAnchor.constraint(equalTo: topAnchor),
+            imageView.rightAnchor.constraint(equalTo: rightAnchor),
+            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
+            
+            effectView.leftAnchor.constraint(equalTo: leftAnchor),
+            effectView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8),
+            effectView.rightAnchor.constraint(equalTo: rightAnchor),
+            effectView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
+            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            ])
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class SearchResultCell: UICollectionViewCell {
+    
+    static let identifier = "searchCell"
+    static let font: UIFont = .systemFont(ofSize: 24, weight: .bold)
+    
+    var recipe: Recipe?
+    
+    let searchResultView: SearchResultView = {
+        let view = SearchResultView(frame: .zero)
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 16
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .background
-        clipsToBounds = true
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.layer.shadowOpacity = 0.2
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 4)
+        contentView.layer.shadowRadius = 8
         setupSubviews()
+    }
+    
+    func updateContent(for recipe: Recipe) {
+        searchResultView.imageView.image = recipe.image
+        searchResultView.titleLabel.text = recipe.title
     }
     
     func reset() {
         recipe = nil
-        recipeImageView.image = nil
-        titleLabel.text = nil
-        gradientView.isHidden = true
+        searchResultView.imageView.image = nil
+        searchResultView.titleLabel.text = nil
     }
     
     private func setupSubviews() {
-        contentView.addSubview(recipeImageView)
-        contentView.addSubview(gradientView)
-        contentView.addSubview(titleLabel)
+        contentView.addSubview(searchResultView)
         
         NSLayoutConstraint.activate([
-            recipeImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            recipeImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            recipeImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            recipeImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
-            gradientView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            gradientView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            gradientView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            gradientView.heightAnchor.constraint(equalToConstant: 64),
-            
-            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8),
-            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8),
-            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
-            ])
+            searchResultView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            searchResultView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            searchResultView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            searchResultView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
         
     }
     

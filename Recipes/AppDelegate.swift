@@ -11,6 +11,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let rootViewController = UINavigationController(rootViewController: SearchStateController())
+        rootViewController.view.backgroundColor = .white
+        rootViewController.navigationBar.isTranslucent = false
+        rootViewController.navigationBar.shadowImage = UIImage()
         
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()

@@ -6,7 +6,7 @@ class SearchIdleController: UIViewController {
     let headerLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .headerText
+        label.textColor = .black
         label.text = "Let's Cook Something"
         return label
     }()
@@ -14,14 +14,14 @@ class SearchIdleController: UIViewController {
     let bodyLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = .headerText
+        label.textColor = .black
         label.text = "What about searching for something sweet?"
         return label
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .background
+        view.backgroundColor = .white
         setupSubviews()
     }
     

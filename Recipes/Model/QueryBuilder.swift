@@ -14,7 +14,7 @@ class QueryBuilder {
     private var operations = [URLQueryItem]()
     
     init() {
-        operations.append(URLQueryItem(name: QueryOperation.key, value: "20df2dd77ca96c91466c41b355a10f48"))
+        operations.append(URLQueryItem(name: QueryOperation.key, value: "548d3e4337da369330dc98f538956505"))
     }
     
     @discardableResult
