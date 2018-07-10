@@ -4,7 +4,7 @@ import UIKit
 class SearchResultController: UIViewController {
     
     private enum NavigationBarState: Int {
-        case showing, disappearing, hidden, appearing
+        case visuable, disappearing, hidden, appearing
     }
     
     lazy var collectionView: UICollectionView = {
@@ -25,7 +25,7 @@ class SearchResultController: UIViewController {
     private var cellAnimator: UIViewPropertyAnimator!
     private var barAnimator: UIViewPropertyAnimator!
     
-    private var navigationBarState: NavigationBarState = .showing
+    private var navigationBarState: NavigationBarState = .visuable
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,7 +146,7 @@ extension SearchResultController: UICollectionViewDelegateFlowLayout {
         startOffset = scrollView.contentOffset.y
         
         switch navigationBarState {
-        case .showing:
+        case .visuable:
             shouldHideNavigationBarIfNeeded(scrollView)
             break
         case .hidden:

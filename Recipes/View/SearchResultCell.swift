@@ -5,6 +5,7 @@ class SearchResultView: UIView {
     
     let imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
+        imageView.backgroundColor = .lightGray
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
