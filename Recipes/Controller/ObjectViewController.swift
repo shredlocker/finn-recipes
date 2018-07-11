@@ -12,6 +12,8 @@ class ObjectViewController: UIViewController {
     
     var containerViewConstraints: EdgeConstraints?
     override var prefersStatusBarHidden: Bool { return true }
+    override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation { return .slide }
     
     lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -50,7 +52,7 @@ class ObjectViewController: UIViewController {
     }
     
     @objc func closeButtonPressed(sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     private func setupSubviews() {

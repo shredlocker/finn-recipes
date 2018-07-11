@@ -10,11 +10,15 @@ import UIKit
 
 class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
+    enum TransitionState {
+        case push, pop, none
+    }
+    
     let duration = 0.6
     let damping: CGFloat = 0.8
     let cell: UICollectionViewCell
     var initialFrame: CGRect
-    var state = UINavigationControllerOperation.none
+    var state = TransitionState.none
     
     lazy var shadowView: UIView = {
         let view = UIView(frame: .zero)
@@ -55,11 +59,12 @@ extension TransitionAnimator {
         
         cell.isHidden = true
         
+        guard let fromViewController = transitionContext.viewController(forKey: .from) as? SearchStateController else { return }
         guard let toViewController = transitionContext.viewController(forKey: .to) as? ObjectViewController else { return }
         toViewController.view.translatesAutoresizingMaskIntoConstraints = false
         
-        containerView.addSubview(shadowView)
-        containerView.addSubview(toViewController.view)
+        containerView.insertSubview(shadowView, belowSubview: fromViewController.headerView)
+        containerView.insertSubview(toViewController.view, belowSubview: fromViewController.headerView)
         
         toViewController.containerViewConstraints = EdgeConstraints(view: toViewController.view, container: containerView, frame: initialFrame)
         toViewController.containerViewConstraints?.toggleConstraints(true)
@@ -75,6 +80,7 @@ extension TransitionAnimator {
             toViewController.view.layer.cornerRadius = 0
             self.shadowView.frame = containerView.frame
             toViewController.closeButton.alpha = 1
+            fromViewController.headerView.alpha = 0
         }
         animator.addCompletion { (position) in
             self.shadowView.removeFromSuperview()
@@ -89,10 +95,10 @@ extension TransitionAnimator {
         cell.transform = .identity
         let frame = cell.convert(cell.contentView.frame, to: containerView)
         
-        guard let toViewController = transitionContext.viewController(forKey: .to) else { return }
+        guard let toViewController = transitionContext.viewController(forKey: .to) as? SearchStateController else { return }
         guard let fromViewController = transitionContext.viewController(forKey: .from) as? ObjectViewController else { return }
         
-        containerView.insertSubview(toViewController.view, belowSubview: fromViewController.view)
+        print("Subviews:", containerView.subviews)
         containerView.insertSubview(shadowView, belowSubview: fromViewController.view)
         
         let animator = UIViewPropertyAnimator(duration: duration, dampingRatio: damping) {
@@ -101,6 +107,7 @@ extension TransitionAnimator {
             fromViewController.view.layer.cornerRadius = 16
             self.shadowView.frame = frame
             fromViewController.closeButton.alpha = 0
+            toViewController.headerView.alpha = 1.0
         }
         animator.addCompletion { (position) in
             self.cell.isHidden = false

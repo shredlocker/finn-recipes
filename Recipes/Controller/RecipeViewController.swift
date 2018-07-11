@@ -76,7 +76,7 @@ extension RecipeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.backgroundColor = .background
         cell.textLabel?.text = nil
         guard let ingredients = recipe.ingredients else { return cell }
-        cell.textLabel?.textColor = .headerText
+        cell.textLabel?.textColor = .textColor
         cell.textLabel?.text = ingredients[indexPath.row]
         
         return cell

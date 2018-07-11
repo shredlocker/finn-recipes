@@ -3,7 +3,7 @@ import UIKit
 
 class SearchResultController: UIViewController {
     
-    enum NavBarState: Int {
+    enum HeaderViewState: Int {
         case visuable, hidden, appearing, disappearing
     }
     
@@ -20,28 +20,33 @@ class SearchResultController: UIViewController {
     var result = SearchResult.empty()
     
     var cellAnimator: UIViewPropertyAnimator!
+    var contentAnimator: UIViewPropertyAnimator!
     
-    var searchBar: UISearchBar?
-    var navigationBar: UINavigationBar!
-    var navbarAnimator: UIViewPropertyAnimator!
-    var navbarLabel: UILabel!
-    var navbarLabelAnimation: UIViewPropertyAnimator!
+    let headerView: UIView
+    var headerViewAnimator: UIViewPropertyAnimator!
+    var headerViewState: HeaderViewState = .visuable
+    var animationHeight: CGFloat = 0.0
     
-    var navbarState: NavBarState = .visuable
+    var transitionDelegate = TransitionDelegate()
     
-    var transitionDelegate = NavigationTransitionDelegate()
+    init(headerView: UIView) {
+        self.headerView = headerView
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        navigationController?.delegate = transitionDelegate
-        navigationBar = navigationController?.navigationBar
-        searchBar = navigationBar.topItem?.titleView as? UISearchBar
+        animationHeight = headerView.frame.height - 44
         
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: SearchResultCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.contentInset = UIEdgeInsets(top: headerView.frame.height - 44, left: 0, bottom: 0, right: 0)
         
         setupSubviews()
     }
@@ -96,7 +101,7 @@ extension SearchResultController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 32, bottom: 8, right: 32)
+        return UIEdgeInsets(top: 16, left: 32, bottom: 16, right: 32)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -155,7 +160,7 @@ extension SearchResultController: UICollectionViewDelegateFlowLayout {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        switch navbarState {
+        switch headerViewState {
         case .visuable:
             hideNavBarIfNeeded(scrollView)
         case .disappearing:
@@ -168,13 +173,13 @@ extension SearchResultController: UICollectionViewDelegateFlowLayout {
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        switch navbarState {
+        switch headerViewState {
         case .disappearing:
+            headerViewState = .hidden
             continueAnimations()
-            navbarState = .hidden
         case .appearing:
+            headerViewState = .visuable
             continueAnimations()
-            navbarState = .visuable
         default:
             return
         }
@@ -184,20 +189,14 @@ extension SearchResultController: UICollectionViewDelegateFlowLayout {
 extension SearchResultController {
         
     private func newAnimations() {
-        navbarAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeOut, animations: {
-            self.navigationBar.transform = CGAffineTransform(translationX: 0, y: -self.navigationBar.frame.height)
+        headerViewAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeOut, animations: {
+            self.headerView.transform = CGAffineTransform(translationX: 0, y: -self.animationHeight)
+            self.headerView.subviews.forEach({ (view) in
+                view.alpha = 0
+            })
         })
-        navbarLabelAnimation = UIViewPropertyAnimator(duration: 0.3, curve: .easeOut, animations: {
-            if let searchBar = self.searchBar {
-                searchBar.alpha = 0
-            }
-        })
-//        navbarLabelAnimation.scrubsLinearly = false
-        navbarAnimator.pausesOnCompletion = true
-        navbarLabelAnimation.pausesOnCompletion = true
-        
-        navbarAnimator.pauseAnimation()
-        navbarLabelAnimation.pauseAnimation()
+        headerViewAnimator.pausesOnCompletion = true
+        headerViewAnimator.pauseAnimation()
     }
     
     private func hideNavBarIfNeeded(_ scrollView: UIScrollView) {
@@ -205,13 +204,12 @@ extension SearchResultController {
         let velocity = gesture.velocity(in: self.view)
         guard velocity.y < 0.0 else { return }
         
-        if navbarAnimator == nil {
+        if headerViewAnimator == nil {
             newAnimations()
         }
         
-        navbarState = .disappearing
-        navbarAnimator.isReversed = false
-        navbarLabelAnimation.isReversed = false
+        headerViewState = .disappearing
+        headerViewAnimator.isReversed = false
     }
     
     private func showNavBarIfNeeded(_ scrollView: UIScrollView) {
@@ -219,46 +217,55 @@ extension SearchResultController {
         let velocity = gesture.velocity(in: self.view)
         guard velocity.y > 0.0 else { return }
         
-        navbarState = .appearing
-        navbarAnimator.isReversed = true
-        navbarLabelAnimation.isReversed = true
+        headerViewState = .appearing
+        headerViewAnimator.isReversed = true
     }
     
     private func continueAnimations() {
-        navbarAnimator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
-        navbarLabelAnimation.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        let durationRemaining = 1 - headerViewAnimator.fractionComplete
+        if headerViewState == .hidden, durationRemaining > 0 {
+            // new content insets
+            let offset = collectionView.contentOffset.y
+            let distance = animationHeight * durationRemaining
+            contentAnimator = UIViewPropertyAnimator(duration: 0.3, curve: .easeOut, animations: {
+                self.collectionView.contentOffset.y = offset + distance
+            })
+            contentAnimator.pauseAnimation()
+            contentAnimator.continueAnimation(withTimingParameters: nil, durationFactor: durationRemaining)
+        }
+        headerViewAnimator.continueAnimation(withTimingParameters: nil, durationFactor: durationRemaining)
     }
     
     private func animateNavBar(_ scrollView: UIScrollView) {
         let gesture = scrollView.panGestureRecognizer
-        let translation = gesture.translation(in: self.view)
-        let fraction = translation.y / -navigationBar.frame.height
-        
+        let translation = gesture.translation(in: view)
+        let direction: CGFloat = headerViewState == .appearing ? 1 :  -1
+        let fraction = direction * translation.y / animationHeight
         guard fraction <= 1.0 else {
-            switch navbarState {
+            switch headerViewState {
             case .appearing:
-                navbarState = .visuable
+                headerViewState = .visuable
                 continueAnimations()
             case .disappearing:
-                navbarState = .hidden
+                headerViewState = .hidden
                 continueAnimations()
             default:
                 break
             }
             return
         }
-        navbarAnimator.fractionComplete = fraction
-        navbarLabelAnimation.fractionComplete = fraction
+        headerViewAnimator.fractionComplete = fraction
     }
     
     private func createTransition(from cell: SearchResultCell) {
-        let frame = cell.contentView.convert(cell.contentView.frame, to: self.navigationController?.view)
+        let frame = cell.contentView.convert(cell.contentView.frame, to: view)
         let transitionAnimator = TransitionAnimator(cell: cell, frame: frame)
         self.transitionDelegate.transitionAnimator = transitionAnimator
         
         if let recipe = cell.recipe {
             let objectController = ObjectViewController(recipe: recipe)
-            self.navigationController?.pushViewController(objectController, animated: true)
+            objectController.transitioningDelegate = transitionDelegate
+            present(objectController, animated: true)
         }
     }
     
@@ -269,7 +276,7 @@ extension SearchResultController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        ])
     }
 }
 

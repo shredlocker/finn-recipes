@@ -8,22 +8,17 @@
 
 import UIKit
 
-class NavigationTransitionDelegate: NSObject, UINavigationControllerDelegate {
+class TransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
     var transitionAnimator: TransitionAnimator?
     
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        switch operation {
-        case .push:
-            navigationController.setNavigationBarHidden(true, animated: true)
-        case .pop:
-            navigationController.setNavigationBarHidden(false, animated: true)
-        default:
-            break
-        }
-        
-        transitionAnimator?.state = operation
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transitionAnimator?.state = .push
+        return transitionAnimator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transitionAnimator?.state = .pop
         return transitionAnimator
     }
 }

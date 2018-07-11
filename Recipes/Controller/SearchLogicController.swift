@@ -7,9 +7,7 @@ protocol SearchLogicDelegate: class {
     func searchLogicController(_ searchLogicController: SearchLogicController, didRecieveError error: Error)
 }
 
-extension Notification {
-    static let dismissKeyboard = Notification.Name("dismissKeyboard")
-}
+
 
 extension SearchLogicController {
     
@@ -25,7 +23,9 @@ class SearchLogicController: UIViewController {
     let searchBar: UISearchBar = {
         let bar = UISearchBar(frame: .zero)
         bar.searchBarStyle = .minimal
+        bar.tintColor = .white
         bar.placeholder = "Search"
+        bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
     
@@ -41,17 +41,17 @@ class SearchLogicController: UIViewController {
     convenience init() {
         self.init(nibName: nil, bundle: nil)
         searchBar.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(dismissKeyboard), name: Notification.dismissKeyboard, object: nil)
     }
     
-    @objc func dismissKeyboard() {
-        dismiss(searchBar, hideCancel: true)
+    override func loadView() {
+        super.loadView()
+        self.view = searchBar
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view did load", navigationItem)
-        navigationItem.titleView = searchBar
+        let textField = searchBar.value(forKey: "searchField") as? UITextField
+        textField?.textColor = .white
     }
     
     private func dismiss(_ searchBar: UISearchBar, hideCancel cancel: Bool) {
@@ -81,26 +81,26 @@ extension SearchLogicController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+
         if let dataTask = currentDataTask {
             dataTask.cancel()
         }
-        
+
         if searchText.isEmpty {
             print("Empty text")
             return
         }
-        
+    
         let queryItems = QueryBuilder()
             .search(withParameters: searchText)
             .build()
-        
+
         guard let searchURL = Service.endpoints.search else { return }
         guard var components = URLComponents(url: searchURL, resolvingAgainstBaseURL: true) else { return }
         components.queryItems = queryItems
-        
+
         let dataTask = Service.request(components.url) { (result: SearchResult?, error) in
-            
+
             if let error = error {
                 DispatchQueue.main.async {
                     self.delegate?.searchLogicController(self, didRecieveError: error)
@@ -122,7 +122,7 @@ extension SearchLogicController: UISearchBarDelegate {
                 self.delegate?.searchLogicController(self, didRecieveResult: result)
             }
         }
-        
+
         dataTask?.resume()
         currentDataTask = dataTask
     }

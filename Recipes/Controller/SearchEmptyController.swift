@@ -6,7 +6,7 @@ class SearchEmptyController: UIViewController {
     let headerLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .headerText
+        label.textColor = .textColor
         label.text = "Sorry!"
         return label
     }()
@@ -14,7 +14,7 @@ class SearchEmptyController: UIViewController {
     let bodyLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = .headerText
+        label.textColor = .textColor
         label.text = "We couldn't find what you're looking for"
         return label
     }()

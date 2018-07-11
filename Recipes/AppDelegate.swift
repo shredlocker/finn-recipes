@@ -10,11 +10,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let rootViewController = UINavigationController(rootViewController: SearchStateController())
-        rootViewController.navigationBar.barTintColor = .white
-        rootViewController.navigationBar.shadowImage = UIImage()
+//        let rootViewController = UINavigationController(rootViewController: SearchStateController())
+//        rootViewController.navigationBar.barTintColor = .white
+//        rootViewController.navigationBar.shadowImage = UIImage()
         
-        window?.rootViewController = rootViewController
+        window?.rootViewController = SearchStateController()
         window?.makeKeyAndVisible()
         
         return true

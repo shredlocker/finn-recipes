@@ -6,7 +6,7 @@ class SearchErrorController: UIViewController {
     let headerLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .headerText
+        label.textColor = .textColor
         label.text = "Woops!"
         return label
     }()
@@ -14,7 +14,7 @@ class SearchErrorController: UIViewController {
     let bodyLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .systemFont(ofSize: 14, weight: .light)
-        label.textColor = .headerText
+        label.textColor = .textColor
         label.text = "Something went wrong, please try again."
         return label
     }()
