@@ -19,6 +19,10 @@
 		DA10A16020EA47D8007CD0C4 /* SearchErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */; };
 		DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */; };
 		DA10A16420EA4A91007CD0C4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA10A16320EA4A91007CD0C4 /* Extensions.swift */; };
+		DA975EB220F4EB10004CA42D /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA975EAE20F4EB0F004CA42D /* TransitionAnimator.swift */; };
+		DA975EB320F4EB10004CA42D /* EdgeConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA975EAF20F4EB0F004CA42D /* EdgeConstraints.swift */; };
+		DA975EB420F4EB10004CA42D /* ObjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA975EB020F4EB0F004CA42D /* ObjectViewController.swift */; };
+		DA975EB520F4EB10004CA42D /* TransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA975EB120F4EB0F004CA42D /* TransitionDelegate.swift */; };
 		DAB2DEF120EB572E00761A3A /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */; };
 		DAB2DEF320EB8D1100761A3A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF220EB8D1100761A3A /* GradientView.swift */; };
 		DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB2DEF420EBB52700761A3A /* RecipeViewController.swift */; };
@@ -40,6 +44,10 @@
 		DA10A15F20EA47D8007CD0C4 /* SearchErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchErrorController.swift; sourceTree = "<group>"; };
 		DA10A16120EA484F007CD0C4 /* SearchIdleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdleController.swift; sourceTree = "<group>"; };
 		DA10A16320EA4A91007CD0C4 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DA975EAE20F4EB0F004CA42D /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		DA975EAF20F4EB0F004CA42D /* EdgeConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeConstraints.swift; sourceTree = "<group>"; };
+		DA975EB020F4EB0F004CA42D /* ObjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectViewController.swift; sourceTree = "<group>"; };
+		DA975EB120F4EB0F004CA42D /* TransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionDelegate.swift; sourceTree = "<group>"; };
 		DAB2DEF020EB572E00761A3A /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		DAB2DEF220EB8D1100761A3A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		DAB2DEF420EBB52700761A3A /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +126,10 @@
 		DAD6217820E6608C0098CB2F /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DA975EAF20F4EB0F004CA42D /* EdgeConstraints.swift */,
+				DA975EB020F4EB0F004CA42D /* ObjectViewController.swift */,
+				DA975EAE20F4EB0F004CA42D /* TransitionAnimator.swift */,
+				DA975EB120F4EB0F004CA42D /* TransitionDelegate.swift */,
 				DA08069720ECB9CC0012C27B /* SearchLogicController.swift */,
 				DA09B2A220E64CF700635934 /* SearchStateController.swift */,
 				DA10A15B20EA45A6007CD0C4 /* SearchResultController.swift */,
@@ -201,16 +213,20 @@
 			files = (
 				DA10A16220EA484F007CD0C4 /* SearchIdleController.swift in Sources */,
 				DA08069820ECB9CC0012C27B /* SearchLogicController.swift in Sources */,
+				DA975EB220F4EB10004CA42D /* TransitionAnimator.swift in Sources */,
 				DAB2DEF520EBB52700761A3A /* RecipeViewController.swift in Sources */,
 				DA10A15C20EA45A6007CD0C4 /* SearchResultController.swift in Sources */,
 				DAD6217620E660780098CB2F /* Recipe.swift in Sources */,
 				DA10A15820E9FD07007CD0C4 /* QueryBuilder.swift in Sources */,
 				DA09B2A320E64CF700635934 /* SearchStateController.swift in Sources */,
+				DA975EB420F4EB10004CA42D /* ObjectViewController.swift in Sources */,
+				DA975EB520F4EB10004CA42D /* TransitionDelegate.swift in Sources */,
 				DA10A16020EA47D8007CD0C4 /* SearchErrorController.swift in Sources */,
 				DA09B2A120E64CF700635934 /* AppDelegate.swift in Sources */,
 				DA10A15A20EA1079007CD0C4 /* Service.swift in Sources */,
 				DA10A16420EA4A91007CD0C4 /* Extensions.swift in Sources */,
 				DAB2DEF320EB8D1100761A3A /* GradientView.swift in Sources */,
+				DA975EB320F4EB10004CA42D /* EdgeConstraints.swift in Sources */,
 				DA10A15E20EA47C5007CD0C4 /* SearchEmptyController.swift in Sources */,
 				DAB2DEF120EB572E00761A3A /* SearchResultCell.swift in Sources */,
 			);

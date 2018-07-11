@@ -35,23 +35,23 @@ class SearchResultView: UIView {
     
     private func setupSubviews() {
         addSubview(imageView)
-        addSubview(effectView)
-        addSubview(titleLabel)
+//        addSubview(effectView)
+//        addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
             imageView.leftAnchor.constraint(equalTo: leftAnchor),
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.rightAnchor.constraint(equalTo: rightAnchor),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
-            
-            effectView.leftAnchor.constraint(equalTo: leftAnchor),
-            effectView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8),
-            effectView.rightAnchor.constraint(equalTo: rightAnchor),
-            effectView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
-            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+//
+//            effectView.leftAnchor.constraint(equalTo: leftAnchor),
+//            effectView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -8),
+//            effectView.rightAnchor.constraint(equalTo: rightAnchor),
+//            effectView.bottomAnchor.constraint(equalTo: bottomAnchor),
+//
+//            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8),
+//            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8),
+//            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
             ])
         
     }
@@ -79,9 +79,9 @@ class SearchResultCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.layer.shadowOpacity = 0.2
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 4)
-        contentView.layer.shadowRadius = 8
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 16
         setupSubviews()
     }
     

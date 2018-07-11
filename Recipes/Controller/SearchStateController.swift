@@ -13,18 +13,14 @@ class SearchStateController: UIViewController {
     
     private let searchLogicController: SearchLogicController
     // State controllers
-    private let emptyController: SearchEmptyController
-    private let errorController: SearchErrorController
-    private let resultController: SearchResultController
-    private let idleController: SearchIdleController
+    private var emptyController: SearchEmptyController!
+    private var errorController: SearchErrorController!
+    private var resultController: SearchResultController!
+    private var idleController: SearchIdleController!
     private var currentViewController: UIViewController?
     
     init() {
         searchLogicController = SearchLogicController()
-        emptyController = SearchEmptyController()
-        errorController = SearchErrorController()
-        resultController = SearchResultController()
-        idleController = SearchIdleController()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,6 +34,11 @@ class SearchStateController: UIViewController {
         
         navigationItem.titleView = searchLogicController.searchBar
         searchLogicController.delegate = self
+        
+        emptyController = SearchEmptyController()
+        errorController = SearchErrorController()
+        resultController = SearchResultController()
+        idleController = SearchIdleController()
         
         displayViewController(for: .none)
     }
